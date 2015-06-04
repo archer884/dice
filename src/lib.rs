@@ -62,8 +62,8 @@ impl<T: ::rand::Rng> DiceResultGenerator for T {
 /// Describes a set of dice of the same type that can be "rolled" all at once, i.e. "2d6"
 #[derive(Debug, Eq, PartialEq)]
 pub struct Dice {
-    count: u32,
-    range: u32,
+    pub count: u32,
+    pub range: u32,
 }
 
 impl Dice {
