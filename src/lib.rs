@@ -63,7 +63,7 @@ impl Dice {
         }
     }
 
-    pub fn gen_result<F: FnMut(u32) -> u32>(&self, f: &mut F) -> DiceResult {
+    pub fn gen_result<F: FnMut(u32) -> u32>(&self, mut f: F) -> DiceResult {
         DiceResult((0..self.count).map(|_| f(self.range)).collect())
     }
 }
