@@ -4,7 +4,7 @@ extern crate regex;
 mod dice_tests;
 use regex::Regex;
 
-static DICE_CMD_PATTERN: Regex = regex!(r"\d(d\d+)?");
+static DICE_CMD_PATTERN: Regex = regex!(r"\d+(d\d+)?");
 
 #[derive(Debug)]
 pub enum DiceParseError {
