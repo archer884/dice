@@ -1,9 +1,7 @@
 #![feature(core, plugin, slice_patterns)]
 #![plugin(regex_macros)]
-extern crate rand;
 extern crate regex;
 mod dice_tests;
-use rand::Rng;
 use regex::Regex;
 
 static DICE_CMD_PATTERN: Regex = regex!(r"\d(d\d+)?");
@@ -65,8 +63,8 @@ impl Dice {
         }
     }
 
-    pub fn gen_result<R: Rng>(&self, rng: &mut R) -> DiceResult {
-        DiceResult((0..self.count).map(|_| rng.gen_range(0, self.range) + 1).collect())
+    pub fn gen_result<F: FnMut(u32) -> u32>(&self, f: &mut F) -> DiceResult {
+        DiceResult((0..self.count).map(|_| f(self.range)).collect())
     }
 }
 
