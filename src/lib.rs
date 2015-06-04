@@ -1,5 +1,6 @@
 #![feature(core, plugin, slice_patterns)]
 #![plugin(regex_macros)]
+extern crate rand;
 extern crate regex;
 mod dice_tests;
 use regex::Regex;
@@ -48,6 +49,16 @@ impl ::std::fmt::Display for DiceResult {
     }
 }
 
+pub trait DiceResultGenerator {
+    fn gen_result(&mut self, dice: &Dice) -> DiceResult;
+}
+
+impl<T: ::rand::Rng> DiceResultGenerator for T {
+    fn gen_result(&mut self, dice: &Dice) -> DiceResult {
+        DiceResult((0..dice.count).map(|_| self.gen_range(0, dice.range) + 1).collect())
+    }
+}
+
 /// Describes a set of dice of the same type that can be "rolled" all at once, i.e. "2d6"
 #[derive(Debug, Eq, PartialEq)]
 pub struct Dice {
@@ -63,8 +74,8 @@ impl Dice {
         }
     }
 
-    pub fn gen_result<F: FnMut(u32) -> u32>(&self, mut f: F) -> DiceResult {
-        DiceResult((0..self.count).map(|_| f(self.range)).collect())
+    pub fn gen_result<G: DiceResultGenerator>(&self, drg: &mut G) -> DiceResult {
+        drg.gen_result(&self)
     }
 }
 
