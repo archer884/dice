@@ -12,7 +12,7 @@ use regex::Regex;
 pub use error::DiceParseError;
 pub use result::{ DiceResult, DiceResultGenerator };
 
-static DICE_CMD_PATTERN: Regex = regex!(r"\d+(d\d+)?");
+static DICE_CMD_PATTERN: Regex = regex!(r"^\d+(d\d+)?$");
 
 /// Describes a set of dice of the same type that can be "rolled" all at once, i.e. "2d6"
 #[derive(Debug, Eq, PartialEq)]
