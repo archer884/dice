@@ -65,10 +65,8 @@ impl Dice {
         }
     }
 
-    pub fn gen_result(&self) -> DiceResult {
-        let mut prng = ::rand::weak_rng();
-
-        DiceResult((0..self.count).map(|_| prng.gen_range(0, self.range) + 1).collect())
+    pub fn gen_result<R: Rng>(&self, rng: &mut R) -> DiceResult {
+        DiceResult((0..self.count).map(|_| rng.gen_range(0, self.range) + 1).collect())
     }
 }
 
