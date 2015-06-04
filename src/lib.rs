@@ -6,6 +6,8 @@ extern crate regex;
 mod dice;
 mod error;
 mod result;
+
+#[cfg(test)]
 mod tests;
 
 pub use dice::Dice;

@@ -11,6 +11,10 @@ impl DiceResult {
         self.0.iter()
     }
 
+    pub fn values(&self) -> &[u32] {
+        &self.0
+    }
+
     pub fn total(&self) -> u32 {
         self.0.iter().sum()
     }
