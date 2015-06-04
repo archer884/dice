@@ -2,62 +2,17 @@
 #![plugin(regex_macros)]
 extern crate rand;
 extern crate regex;
-mod dice_tests;
+
+mod error;
+mod result;
+mod tests;
+
 use regex::Regex;
 
+pub use error::DiceParseError;
+pub use result::{ DiceResult, DiceResultGenerator };
+
 static DICE_CMD_PATTERN: Regex = regex!(r"\d+(d\d+)?");
-
-#[derive(Debug)]
-pub enum DiceParseError {
-    InvalidExpression,
-}
-
-impl ::std::error::Error for DiceParseError {
-    fn description(&self) -> &str {
-        match self {
-            &DiceParseError::InvalidExpression => "Invalid dice expression",
-        }
-    }
-}
-
-impl ::std::fmt::Display for DiceParseError {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.write_str(::std::error::Error::description(self))
-    }
-}
-
-pub struct DiceResult(Vec<u32>);
-
-impl DiceResult {
-    pub fn new(values: Vec<u32>) -> DiceResult {
-        DiceResult(values)
-    }
-
-    pub fn iter<'a>(&'a self) -> ::std::slice::Iter<'a, u32> {
-        self.0.iter()
-    }
-
-    pub fn total(&self) -> u32 {
-        self.0.iter().sum()
-    }
-}
-
-impl ::std::fmt::Display for DiceResult {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        let as_strings: Vec<_> = self.iter().map(|n| n.to_string()).collect();
-        write!(f, "{} ({})", as_strings.connect(", "), self.total())
-    }
-}
-
-pub trait DiceResultGenerator {
-    fn gen_result(&mut self, dice: &Dice) -> DiceResult;
-}
-
-impl<T: ::rand::Rng> DiceResultGenerator for T {
-    fn gen_result(&mut self, dice: &Dice) -> DiceResult {
-        DiceResult((0..dice.count).map(|_| self.gen_range(0, dice.range) + 1).collect())
-    }
-}
 
 /// Describes a set of dice of the same type that can be "rolled" all at once, i.e. "2d6"
 #[derive(Debug, Eq, PartialEq)]
