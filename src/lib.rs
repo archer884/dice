@@ -1,7 +1,9 @@
 #![feature(plugin, slice_patterns)]
 #![plugin(regex_macros)]
+extern crate rand;
 extern crate regex;
 mod dice_tests;
+use rand::Rng;
 use regex::Regex;
 
 static DICE_CMD_PATTERN: Regex = regex!(r"\d(d\d+)?");
@@ -25,19 +27,27 @@ impl ::std::fmt::Display for DiceParseError {
     }
 }
 
+pub struct DiceResult(Vec<u32>);
+
 /// Describes a set of dice of the same type that can be "rolled" all at once, i.e. "2d6"
-#[derive(Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Dice {
     count: u32,
     range: u32,
 }
 
 impl Dice {
-    fn new(count: u32, range: u32) -> Dice {
+    pub fn new(count: u32, range: u32) -> Dice {
         Dice {
             count: count,
             range: range,
         }
+    }
+
+    pub fn gen_result(&self) -> DiceResult {
+        let mut prng = ::rand::weak_rng();
+
+        DiceResult((0..self.count).map(|_| prng.gen_range(0, self.range) + 1).collect())
     }
 }
 
