@@ -9,4 +9,4 @@ Since making the video, I have integrated this library into my actual rolling pr
 
 ## version 1.1
 
-- Adds `.values()` to the dice result struct, which provides a slice into the underlying vec
+- Adds `.values()` to the dice result struct, which provides a slice into the underlying Vec<u32>
