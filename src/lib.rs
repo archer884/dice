@@ -1,4 +1,4 @@
-#![feature(plugin, slice_patterns)]
+#![feature(core, plugin, slice_patterns)]
 #![plugin(regex_macros)]
 extern crate rand;
 extern crate regex;
@@ -28,6 +28,27 @@ impl ::std::fmt::Display for DiceParseError {
 }
 
 pub struct DiceResult(Vec<u32>);
+
+impl DiceResult {
+    pub fn new(values: Vec<u32>) -> DiceResult {
+        DiceResult(values)
+    }
+
+    pub fn iter<'a>(&'a self) -> ::std::slice::Iter<'a, u32> {
+        self.0.iter()
+    }
+
+    pub fn total(&self) -> u32 {
+        self.0.iter().sum()
+    }
+}
+
+impl ::std::fmt::Display for DiceResult {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let as_strings: Vec<_> = self.iter().map(|n| n.to_string()).collect();
+        write!(f, "{} ({})", as_strings.connect(", "), self.total())
+    }
+}
 
 /// Describes a set of dice of the same type that can be "rolled" all at once, i.e. "2d6"
 #[derive(Debug, Eq, PartialEq)]
