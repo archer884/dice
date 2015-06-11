@@ -12,4 +12,4 @@ mod tests;
 
 pub use dice::Dice;
 pub use error::DiceParseError;
-pub use result::{ DiceResult, DiceResultGenerator };
+pub use result::{ DiceResult, DiceResultGenerator, GenFn };
