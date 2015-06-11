@@ -1,5 +1,5 @@
 use dice::Dice;
-use result::{ DiceResult, DiceResultGenerator };
+use result::{ DiceResult, DiceResultGenerator, GenFn };
 
 #[test]
 /// `parse()` handles input of the form `2d6`
@@ -13,6 +13,20 @@ fn parse_handles_long_form() {
 fn parse_handles_short_form() {
     let cmd = Dice::new(1, 6);
     assert!(cmd == "6".parse().unwrap());
+}
+
+#[test]
+/// GenFn works correctly with dice commands
+fn genfn_works() {
+    let cmd = Dice::new(10, 10);
+    let mut seed = 1;
+    let mut gen = GenFn(|_| {
+        let ret = seed;
+        seed += 1;
+        ret
+    });
+
+    assert!([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] == cmd.gen_result(&mut gen).values());
 }
 
 #[test]

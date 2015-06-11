@@ -37,7 +37,7 @@ impl<T: ::rand::Rng> DiceResultGenerator for T {
     }
 }
 
-pub struct GenFn<F: FnMut(u32) -> u32>(F);
+pub struct GenFn<F: FnMut(u32) -> u32>(pubF);
 
 impl<F: FnMut(u32) -> u32> DiceResultGenerator for GenFn<F> {
     fn gen_result(&mut self, dice: &Dice) -> DiceResult {
