@@ -1,4 +1,4 @@
-#![feature(core, plugin, slice_patterns)]
+#![feature(core, iter_arith, plugin, slice_patterns)]
 #![plugin(regex_macros)]
 extern crate rand;
 extern crate regex;
