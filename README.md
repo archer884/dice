@@ -7,9 +7,10 @@ Since the video was posted, I have reorganized the crate somewhat so that it use
 
 Since making the video, I have integrated this library into my actual rolling program. The source for that is [here](https://github.com/archer884/roll).
 
-## version 1.1
+## version 1.2.1
 
-- Adds `.values()` to the dice result struct, which provides a slice into the underlying Vec<u32>
+- Use `Regex::new()` in place of `regex!()` because of performance improvements to ordinary regular expressions in the regex crate
+- Use `lazy_static!` to create the regular expression in order to maintain previous ergonomics
 
 ## version 1.2
 
@@ -18,3 +19,7 @@ Since making the video, I have integrated this library into my actual rolling pr
 I see this as an important change to the API because it reduces the friction between the old API and the newone. Where before you could just pass in a function, e.g. `|max| rng.gen_range(0, max) + 1`, it is now possible to do exactly that again provided that you wrap it in like this: `GenFn(|max| rng.gen_range(0, max) + 1)`.
 
 So, basically, it's now possible to have your cake and eat it, too--which is a pretty rare thing, to be honest.
+
+## version 1.1
+
+- Adds `.values()` to the dice result struct, which provides a slice into the underlying Vec<u32>
