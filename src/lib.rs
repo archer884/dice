@@ -1,5 +1,7 @@
-#![feature(core, iter_arith, plugin, slice_patterns)]
-#![plugin(regex_macros)]
+#![feature(iter_arith, slice_patterns)]
+
+#[macro_use]
+extern crate lazy_static;
 extern crate rand;
 extern crate regex;
 
