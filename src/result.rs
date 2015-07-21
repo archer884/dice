@@ -23,7 +23,7 @@ impl DiceResult {
 impl ::std::fmt::Display for DiceResult {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let as_strings: Vec<_> = self.iter().map(|n| n.to_string()).collect();
-        write!(f, "{} ({})", as_strings.connect(", "), self.total())
+        write!(f, "{} ({})", as_strings.join(", "), self.total())
     }
 }
 
