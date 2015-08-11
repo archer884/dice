@@ -1,5 +1,5 @@
 use error::DiceParseError;
-use result::{ VecResult, DiceResultGenerator };
+use result::DiceResultGenerator;
 use regex::Regex;
 
 // Avoid really long lines >.>
