@@ -1,5 +1,3 @@
-use dice::Dice;
-
 pub trait DiceResult {
     type RollValue;
 
