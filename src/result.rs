@@ -1,10 +1,10 @@
 use ::Dice;
 
-pub struct DiceResult(Vec<u32>);
+pub struct VecResult(Vec<u32>);
 
-impl DiceResult {
-    pub fn new(values: Vec<u32>) -> DiceResult {
-        DiceResult(values)
+impl VecResult {
+    pub fn new(values: Vec<u32>) -> VecResult {
+        VecResult(values)
     }
 
     pub fn iter<'a>(&'a self) -> ::std::slice::Iter<'a, u32> {
@@ -20,7 +20,7 @@ impl DiceResult {
     }
 }
 
-impl ::std::fmt::Display for DiceResult {
+impl ::std::fmt::Display for VecResult {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let as_strings: Vec<_> = self.iter().map(|n| n.to_string()).collect();
         write!(f, "{} ({})", as_strings.join(", "), self.total())
@@ -28,19 +28,25 @@ impl ::std::fmt::Display for DiceResult {
 }
 
 pub trait DiceResultGenerator {
-    fn gen_result(&mut self, dice: &Dice) -> DiceResult;
+    type DiceResult;
+
+    fn gen_result(&mut self, dice: &Dice) -> Self::DiceResult;
 }
 
 impl<T: ::rand::Rng> DiceResultGenerator for T {
-    fn gen_result(&mut self, dice: &Dice) -> DiceResult {
-        DiceResult((0..dice.count).map(|_| self.gen_range(0, dice.range) + 1).collect())
+    type DiceResult = VecResult;
+
+    fn gen_result(&mut self, dice: &Dice) -> Self::DiceResult {
+        VecResult((0..dice.count).map(|_| self.gen_range(0, dice.range) + 1).collect())
     }
 }
 
 pub struct GenFn<F: FnMut(u32) -> u32>(pub F);
 
 impl<F: FnMut(u32) -> u32> DiceResultGenerator for GenFn<F> {
-    fn gen_result(&mut self, dice: &Dice) -> DiceResult {
-        DiceResult((0..dice.count).map(|_| self.0(dice.range)).collect())
+    type DiceResult = VecResult;
+
+    fn gen_result(&mut self, dice: &Dice) -> Self::DiceResult {
+        VecResult((0..dice.count).map(|_| self.0(dice.range)).collect())
     }
 }

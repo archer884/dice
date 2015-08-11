@@ -1,6 +1,9 @@
 use error::DiceParseError;
-use result::{ DiceResult, DiceResultGenerator };
+use result::{ VecResult, DiceResultGenerator };
 use regex::Regex;
+
+// Avoid really long lines >.>
+use result::DiceResultGenerator as Drg;
 
 lazy_static! {
     static ref DICE_CMD_PATTERN: Regex = Regex::new(r"^\d+(d\d+)?$").unwrap();
@@ -23,7 +26,7 @@ impl Dice {
     }
 
     /// Generates the result of a dice roll for a given `Dice` value
-    pub fn gen_result<G: DiceResultGenerator>(&self, drg: &mut G) -> DiceResult {
+    pub fn gen_result<G: Drg>(&self, drg: &mut G) -> <G as Drg>::DiceResult {
         drg.gen_result(&self)
     }
 }

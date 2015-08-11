@@ -1,5 +1,5 @@
 use dice::Dice;
-use result::{ DiceResult, DiceResultGenerator, GenFn };
+use result::{ VecResult, DiceResultGenerator, GenFn };
 
 #[test]
 /// `parse()` handles input of the form `2d6`
@@ -39,8 +39,10 @@ fn drg_works() {
 struct TestDrg(u32, u32);
 
 impl DiceResultGenerator for TestDrg {
-    fn gen_result(&mut self, dice: &::dice::Dice) -> DiceResult {
-        DiceResult::new((0..dice.count).map(|_| if self.0 == self.1 {
+    type DiceResult = VecResult;
+
+    fn gen_result(&mut self, dice: &::dice::Dice) -> Self::DiceResult {
+        VecResult::new((0..dice.count).map(|_| if self.0 == self.1 {
             self.0 = 1;
             self.1
         } else {
