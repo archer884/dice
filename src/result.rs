@@ -13,10 +13,6 @@ impl VecResult {
     pub fn new(values: Vec<u32>) -> VecResult {
         VecResult(values)
     }
-
-    pub fn iter<'a>(&'a self) -> ::std::slice::Iter<'a, u32> {
-        self.0.iter()
-    }
 }
 
 impl DiceResult for VecResult {
@@ -33,7 +29,7 @@ impl DiceResult for VecResult {
 
 impl ::std::fmt::Display for VecResult {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        let as_strings: Vec<_> = self.iter().map(|n| n.to_string()).collect();
+        let as_strings: Vec<_> = self.values().iter().map(|n| n.to_string()).collect();
         write!(f, "{} ({})", as_strings.join(", "), self.total())
     }
 }
