@@ -7,11 +7,13 @@ extern crate regex;
 
 mod dice;
 mod error;
+mod generator;
 mod result;
 
 pub use dice::Dice;
 pub use error::DiceParseError;
-pub use result::{ DiceResult, DiceResultGenerator, GenFn, VecResult };
+pub use generator::{ DiceResultGenerator, GenFn };
+pub use result::{ DiceResult, VecResult };
 
 #[cfg(test)]
 mod tests {

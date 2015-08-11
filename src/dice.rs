@@ -1,9 +1,9 @@
 use error::DiceParseError;
-use result::DiceResultGenerator;
+use generator::DiceResultGenerator;
 use regex::Regex;
 
 // Avoid really long lines >.>
-use result::DiceResultGenerator as Drg;
+use generator::DiceResultGenerator as Drg;
 
 lazy_static! {
     static ref DICE_CMD_PATTERN: Regex = Regex::new(r"^\d+(d\d+)?$").unwrap();
