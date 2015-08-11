@@ -1,5 +1,12 @@
 use ::Dice;
 
+pub trait DiceResult {
+    type RollValue;
+
+    fn values(&self) -> &[Self::RollValue];
+    fn total(&self) -> u32;
+}
+
 pub struct VecResult(Vec<u32>);
 
 impl VecResult {
@@ -10,12 +17,16 @@ impl VecResult {
     pub fn iter<'a>(&'a self) -> ::std::slice::Iter<'a, u32> {
         self.0.iter()
     }
+}
 
-    pub fn values(&self) -> &[u32] {
+impl DiceResult for VecResult {
+    type RollValue = u32;
+
+    fn values(&self) -> &[Self::RollValue] {
         &self.0
     }
 
-    pub fn total(&self) -> u32 {
+    fn total(&self) -> u32 {
         self.0.iter().sum()
     }
 }
