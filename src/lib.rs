@@ -14,4 +14,4 @@ mod tests;
 
 pub use dice::Dice;
 pub use error::DiceParseError;
-pub use result::{ VecResult, DiceResultGenerator, GenFn };
+pub use result::{ DiceResult, DiceResultGenerator, GenFn, VecResult };

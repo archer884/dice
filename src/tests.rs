@@ -1,5 +1,5 @@
 use dice::Dice;
-use result::{ VecResult, DiceResultGenerator, GenFn };
+use result::{ DiceResult, DiceResultGenerator, GenFn, VecResult };
 
 #[test]
 /// `parse()` handles input of the form `2d6`
