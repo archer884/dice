@@ -50,14 +50,21 @@ mod tests {
             ret
         });
 
-        assert!([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] == cmd.gen_result(&mut gen).values());
+        let target = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let test = cmd.gen_result(&mut gen).values().collect::<Vec<_>>();
+
+        assert!(&target == &test[..]);
     }
 
     #[test]
     /// dice result generators work correctly with dice commands
     fn drg_works() {
         let cmd = Dice::new(10, 10);
-        assert!([1, 2, 1, 2, 1, 2, 1, 2, 1, 2] == cmd.gen_result(&mut TestDrg(1, 2)).values())
+
+        let target = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2];
+        let test = cmd.gen_result(&mut TestDrg(1, 2)).values().collect::<Vec<_>>();
+
+        assert!(&target == &test[..])
     }
 
     struct TestDrg(u32, u32);
