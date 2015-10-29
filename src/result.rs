@@ -3,7 +3,7 @@ use std::fmt;
 pub trait DiceResult {
     type RollValue;
     fn values(&self) -> &[Self::RollValue];
-    fn total(&self) -> u32;
+    fn total(&self) -> Self::RollValue;
 }
 
 pub struct VecResult(Vec<u32>);
