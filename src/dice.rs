@@ -25,7 +25,7 @@ impl Dice {
     }
 
     /// Generates the result of a dice roll for a given `Dice` value
-    pub fn gen_result<'a, T: Generator<'a>>(&'a self, generator: &'a mut T) -> <T as Generator>::Iterator {
+    pub fn gen_result<'a, T: Generator<'a>>(&'a self, generator: &'a mut T) -> <T as Generator>::Output {
         generator.generate(&self)
     }
 }
