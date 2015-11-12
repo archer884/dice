@@ -1,3 +1,5 @@
+use std::str;
+
 use error::DiceParseError;
 use generator::Generator;
 use regex::Regex;
@@ -23,12 +25,12 @@ impl Dice {
     }
 
     /// Generates the result of a dice roll for a given `Dice` value
-    pub fn gen_result<T: Generator>(&self, generator: &mut T) -> <T as Generator>::Result {
+    pub fn gen_result<'a, T: Generator<'a>>(&'a self, generator: &'a mut T) -> <T as Generator>::Iterator {
         generator.generate(&self)
     }
 }
 
-impl ::std::str::FromStr for Dice {
+impl str::FromStr for Dice {
     type Err = DiceParseError;
 
     fn from_str(s: &str) -> Result<Dice, Self::Err> {
