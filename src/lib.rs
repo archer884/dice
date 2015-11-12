@@ -1,4 +1,4 @@
-#![feature(iter_arith, slice_patterns)]
+#![feature(slice_patterns)]
 
 #[macro_use]
 extern crate lazy_static;
@@ -8,21 +8,17 @@ extern crate regex;
 mod dice;
 mod error;
 mod generator;
-mod result;
 
 pub use dice::Dice;
 pub use error::DiceParseError;
-pub use generator::{ DiceResultGenerator, GenFn };
-pub use result::{ DiceResult, VecResult };
+pub use generator::Generator;
 
 #[cfg(test)]
 mod tests {
     use super::{
         Dice,
-        DiceResult,
         DiceResultGenerator,
         GenFn,
-        VecResult
     };
 
     #[test]
