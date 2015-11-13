@@ -10,6 +10,6 @@ impl<T: Rng> Generator for T {
     type Output = Vec<u32>;
 
     fn generate(&mut self, dice: &Dice) -> Self::Output {
-        (0..dice.count).map(move |_| self.gen_range(0, dice.range) + 1).collect()
+        (0..dice.count).map(|_| self.gen_range(0, dice.range) + 1).collect()
     }
 }
