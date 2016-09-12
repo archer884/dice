@@ -1,5 +1,3 @@
-#![feature(slice_patterns)]
-
 #[macro_use]
 extern crate lazy_static;
 extern crate rand;

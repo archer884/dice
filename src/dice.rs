@@ -38,10 +38,10 @@ impl str::FromStr for Dice {
             return Err(DiceParseError::InvalidExpression)
         }
 
-        let split: Vec<_> = s.split('d').filter_map(|n| n.parse().ok()).collect();
-        match &split[..] {
-            [ref count, ref range] => Ok(Dice::new(*count, *range)),
-            [ref range] => Ok(Dice::new(1, *range)),
+        let mut parts = s.split('d').filter_map(|n| n.parse().ok());
+        match (parts.next(), parts.next()) {
+            (Some(count), Some(range)) => Ok(Dice::new(count, range)),
+            (Some(range), None) => Ok(Dice::new(1, range)),
             _ => Err(DiceParseError::InvalidExpression),
         }
     }
